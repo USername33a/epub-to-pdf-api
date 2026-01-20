@@ -1,15 +1,20 @@
-FROM python:3.10-slim
+# Use full Debian image instead of slim
+FROM debian:bookworm-slim
 
-# Install dependencies
+# Install Python and system dependencies
 RUN apt-get update && apt-get install -y \
-    xz-utils \
+    python3 \
+    python3-pip \
     wget \
+    xz-utils \
     fontconfig \
     libfreetype6 \
     libxrender1 \
+    libjpeg62-turbo \
+    libpng16-16 \
     && rm -rf /var/lib/apt/lists/*
 
-# Download and install Calibre portable
+# Install Calibre from official binary
 RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin
 
 # Set working directory
@@ -19,7 +24,7 @@ WORKDIR /app
 COPY . /app
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Expose port
 EXPOSE 10000
