@@ -1,9 +1,3 @@
 #!/bin/bash
+echo "Using Docker build, no system install needed"
 
-echo "Updating system..."
-apt-get update
-
-echo "Installing calibre..."
-apt-get install -y calibre
-
-echo "Done installing calibre"
